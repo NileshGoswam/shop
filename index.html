@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotwheels | BikeBazaar</title>
+  <style>
+    :root {
+      --dark-red: #6f1d1b;
+      --gold: #bb9457;
+      --dark-brown: #432818;
+      --copper: #99582a;
+      --light-cream: #ffe6a7;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--light-cream);
+      color: var(--dark-brown);
+    }
+
+    header {
+      background-color: var(--dark-red);
+      color: var(--light-cream);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    nav a {
+      color: var(--light-cream);
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/N61Gy6L/main-bg.jpg') center/cover no-repeat;
+      padding: 6rem 2rem;
+      text-align: center;
+      color: var(--light-cream);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    .products {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product {
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      background-color: var(--light-cream);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .product img {
+      max-width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product h3 {
+      color: var(--dark-brown);
+      margin-top: 1rem;
+    }
+
+    .product p {
+      font-weight: bold;
+      color: var(--copper);
+    }
+
+    .product button {
+      background-color: var(--dark-red);
+      color: var(--light-cream);
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin-top: 0.5rem;
+    }
+
+    .cart-section {
+      padding: 2rem;
+      background-color: var(--gold);
+      color: var(--dark-brown);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://i.ibb.co/PGshfLY/logo.png" alt="Hotwheels Logo">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Products</a>
+      <a href="#">Cart</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to Hotwheels World</h1>
+    <p>Discover the coolest Hotwheels for all ages!</p>
+  </section>
+
+  <section class="products">
+    <div class="product">
+      <img src="https://i.ibb.co/5Wd2Nrd/hot1.jpg" alt="Hotwheels Racer">
+      <h3>Hotwheels Racer</h3>
+      <p>₹249</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/k2BykPq/hot2.jpg" alt="Speed Blaster">
+      <h3>Speed Blaster</h3>
+      <p>₹299</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/NwVhgRB/hot3.jpg" alt="Track Star">
+      <h3>Track Star</h3>
+      <p>₹399</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/20BR0V7/hot4.jpg" alt="Thunder Strike">
+      <h3>Thunder Strike</h3>
+      <p>₹349</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/Gfjwd60/hot5.jpg" alt="Turbo Flame">
+      <h3>Turbo Flame</h3>
+      <p>₹599</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/5X9NWRF/hot6.jpg" alt="Shadow Rider">
+      <h3>Shadow Rider</h3>
+      <p>₹200</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/vxhV7pn/hot7.jpg" alt="Blazing Bullet">
+      <h3>Blazing Bullet</h3>
+      <p>₹480</p>
+      <button>Add to Cart</button>
+    </div>
+    <div class="product">
+      <img src="https://i.ibb.co/gFThs9G/hot8.jpg" alt="Velocity Viper">
+      <h3>Velocity Viper</h3>
+      <p>₹449</p>
+      <button>Add to Cart</button>
+    </div>
+  </section>
+
+  <section class="cart-section">
+    <h2>Your Cart</h2>
+    <p>No items in cart</p>
+    <button>Checkout</button>
+  </section>
+</body>
+</html>
