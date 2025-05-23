@@ -1,489 +1,787 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel= "stylesheet" href="a.css">
-  <title>Hotwheels | BikeBazaar</title>
-  <style>
-    :root {
-      --dark-red: #6f1d1b;
-      --gold: #bb9457;
-
-      --dark-brown: #432818;
-
-      --copper: #99582a;
-
-      --light-cream: #ffe6a7;
-
-    }
-
-
-
-    body {
-
-      margin: 0;
-
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-      background-color: var(--light-cream);
-
-      color: var(--dark-brown);
-
-    }
-
-
-
-    header {
-
-      background-color: var(--dark-red);
-
-      color: var(--light-cream);
-
-      padding: 1rem;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      flex-wrap: wrap;
-
-    }
-
-
-
-    header img {
-
-      height: 50px;
-
-    }
-
-
-
-    nav a {
-
-      color: var(--light-cream);
-
-      margin: 0 1rem;
-
-      text-decoration: none;
-
-      font-weight: bold;
-
-    }
-
-
-
-    .hero {
-
-      background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.4)), url('https://i.ibb.co/N61Gy6L/main-bg.jpg') center/cover no-repeat;
-
-      padding: 6rem 2rem;
-
-      text-align: center;
-
-      color: var(--light-cream);
-
-    }
-
-
-
-    .hero h1 {
-
-      font-size: 3rem;
-
-      margin-bottom: 1rem;
-
-      text-shadow: 2px 2px 4px #000;
-
-    }
-
-
-
-    .products {
-
-      padding: 2rem;
-
-      display: grid;
-
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
-      gap: 1.5rem;
-
-    }
-
-
-
-    .product {
-
-      border: 2px solid var(--gold);
-
-      border-radius: 8px;
-
-      background-color: var(--light-cream);
-
-      padding: 1rem;
-
-      text-align: center;
-
-    }
-
-
-
-    .product img {
-
-      max-width: 100%;
-
-      height: 200px;
-
-      object-fit: cover;
-
-      border-radius: 6px;
-
-    }
-
-
-
-    .product h3 {
-
-      color: var(--dark-brown);
-
-      margin-top: 1rem;
-
-    }
-
-
-
-    .product p {
-
-      font-weight: bold;
-
-      color: var(--copper);
-
-    }
-
-
-
-    .product button {
-
-      background-color: var(--dark-red);
-
-      color: var(--light-cream);
-
-      border: none;
-
-      padding: 0.5rem 1rem;
-
-      cursor: pointer;
-
-      border-radius: 4px;
-
-      margin-top: 0.5rem;
-
-    }
-
-
-
-    .cart-section {
-
-      padding: 2rem;
-
-      background-color: var(--gold);
-
-      color: var(--dark-brown);
-
-      text-align: center;
-
-    }
-
-
-
-    .cart-item {
-
-      display: flex;
-
-      justify-content: space-between;
-
-      align-items: center;
-
-      margin: 0.5rem 0;
-
-    }
-
-
-
-    .cart-item button {
-
-      background-color: var(--dark-red);
-
-      color: var(--light-cream);
-
-      border: none;
-
-      padding: 0.25rem 0.5rem;
-
-      border-radius: 4px;
-
-      cursor: pointer;
-
-    }
-
-  </style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotwheels | BikeBazaar - Enhanced Shopping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to integrate with Tailwind or for elements Tailwind doesn't directly handle */
+        :root {
+            --dark-red: #6f1d1b;
+            --gold: #bb9457;
+            --dark-brown: #432818;
+            --copper: #99582a;
+            --light-cream: #ffe6a7;
+        }
+
+        /* Define Tailwind custom colors (optional, but good practice for brand colors) */
+        /* This must be done via the Tailwind config, but for CDN it's trickier.
+           For this example, we'll directly use hex codes where necessary or rely on default Tailwind colors.
+           If you were using a build process, your tailwind.config.js would look something like:
+           module.exports = {
+             theme: {
+               extend: {
+                 colors: {
+                   'dark-red': '#6f1d1b',
+                   'gold': '#bb9457',
+                   'dark-brown': '#432818',
+                   'copper': '#99582a',
+                   'light-cream': '#ffe6a7',
+                 }
+               }
+             }
+           }
+        */
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Specific styles for the section titles (as Tailwind doesn't have a direct '::after' pseudo-element utility) */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #bb9457; /* gold */
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Modal Overlay - using flex to center content */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* To control the active section display */
+        .hidden-section {
+            display: none;
+        }
+    </style>
 </head>
-
-<body>
-
-  <header>
-
-    <nav>
-
-      <a href="#">Home</a>
-
-      <a href="#">Products</a>
-
-      <a href="#">Cart</a>
-
-    </nav>
-
-  </header>
-
-
-
-  <section class="hero">
-
-    <h1>Welcome to Hotwheels World</h1>
-
-    <p>Discover the coolest Hotwheels for all ages!</p>
-
-  </section>
-
-
-
-  <section class="products" id="products">
-
-    <div class="product">
-
-      <img src="images.jpeg" alt="Hotwheels Racer">
-
-      <h3>Hotwheels Racer</h3>
-
-      <p>₹249</p>
-
-      <button onclick="addToCart('Hotwheels Racer', 249)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (2).jpeg" alt="Speed Blaster">
-
-      <h3>Speed Blaster</h3>
-
-      <p>₹299</p>
-
-      <button onclick="addToCart('Speed Blaster', 299)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (3).jpeg" alt="Track Star">
-
-      <h3>Track Star</h3>
-
-      <p>₹399</p>
-
-      <button onclick="addToCart('Track Star', 399)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (8).jpeg" alt="Thunder Strike">
-
-      <h3>Thunder Strike</h3>
-
-      <p>₹349</p>
-
-      <button onclick="addToCart('Thunder Strike', 349)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (7).jpeg" alt="Turbo Flame">
-
-      <h3>Turbo Flame</h3>
-
-      <p>₹599</p>
-
-      <button onclick="addToCart('Turbo Flame', 599)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (6).jpeg" alt="Shadow Rider">
-
-      <h3>Shadow Rider</h3>
-
-      <p>₹200</p>
-
-      <button onclick="addToCart('Shadow Rider', 200)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (5).jpeg" alt="Blazing Bullet">
-
-      <h3>Blazing Bullet</h3>
-
-      <p>₹480</p>
-
-      <button onclick="addToCart('Blazing Bullet', 480)">Add to Cart</button>
-
-    </div>
-
-    <div class="product">
-
-      <img src="images (4).jpeg" alt="Velocity Viper">
-
-      <h3>Velocity Viper</h3>
-
-      <p>₹449</p>
-
-      <button onclick="addToCart('Velocity Viper', 449)">Add to Cart</button>
-
-    </div>
-
-  </section>
-
-
-
-  <section class="cart-section">
-
-    <h2>Your Cart</h2>
-
-    <ul id="cart-items"></ul>
-
-    <p id="cart-total">Total: ₹0</p>
-
-    <button onclick="checkout()">Checkout</button>
-
-  </section>
-
-
-
-  <script>
-
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-
-
-    function addToCart(product, price) {
-
-      const existing = cart.find(item => item.product === product);
-
-      if (existing) {
-
-        existing.quantity += 1;
-
-      } else {
-
-        cart.push({ product, price, quantity: 1 });
-
-      }
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-
-      renderCart();
-
-    }
-
-
-
-    function removeFromCart(product) {
-
-      cart = cart.filter(item => item.product !== product);
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-
-      renderCart();
-
-    }
-
-
-
-    function renderCart() {
-
-      const cartItems = document.getElementById('cart-items');
-
-      const cartTotal = document.getElementById('cart-total');
-
-      cartItems.innerHTML = '';
-
-      let total = 0;
-
-
-
-      cart.forEach(item => {
-
-        const li = document.createElement('li');
-
-        li.className = 'cart-item';
-
-        li.innerHTML = `
-
-          <span>${item.product} (x${item.quantity}) - ₹${item.price * item.quantity}</span>
-
-          <button onclick="removeFromCart('${item.product}')">Remove</button>
-
-        `;
-
-        cartItems.appendChild(li);
-
-        total += item.price * item.quantity;
-
-      });
-
-
-
-      cartTotal.textContent = `Total: ₹${total}`;
-
-    }
-
-
-
-    function checkout() {
-
-      if (cart.length === 0) {
-
-        alert('Your cart is empty!');
-
-      } else {
-
-        alert('Thank you for your purchase!');
-
-        cart = [];
-
-        localStorage.removeItem('cart');
-
-        renderCart();
-
-      }
-
-    }
-
-
-
-    document.addEventListener('DOMContentLoaded', renderCart);
-
-  </script>
-
+<body class="bg-[#ffe6a7] text-[#432818]">
+
+    <header class="bg-[#6f1d1b] text-[#ffe6a7] p-4 flex items-center justify-between flex-wrap shadow-md">
+        <div class="h-12 bg-[#bb9457] w-36 flex items-center justify-center font-bold text-lg rounded-md text-[#432818]">BikeBazaar</div>
+        <nav class="mt-4 md:mt-0">
+            <a href="#products-section" onclick="showSection('products-section')" class="text-[#ffe6a7] mx-2 md:mx-4 no-underline font-bold hover:text-[#bb9457] transition-colors duration-300">Products</a>
+            <a href="#cart-section" onclick="showSection('cart-section')" class="text-[#ffe6a7] mx-2 md:mx-4 no-underline font-bold hover:text-[#bb9457] transition-colors duration-300">Cart (<span id="cart-count">0</span>)</a>
+            <a href="#" class="text-[#ffe6a7] mx-2 md:mx-4 no-underline font-bold hover:text-[#bb9457] transition-colors duration-300">About</a>
+            <a href="#" class="text-[#ffe6a7] mx-2 md:mx-4 no-underline font-bold hover:text-[#bb9457] transition-colors duration-300">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero bg-[linear-gradient(rgba(255,255,255,0.4),rgba(0,0,0,0.4)),url('https://i.ibb.co/N61Gy6L/main-bg.jpg')] bg-center bg-cover bg-no-repeat py-24 px-8 text-center text-[#ffe6a7] text-shadow-lg">
+        <h1 class="text-5xl md:text-6xl mb-4 text-shadow-md">Welcome to Hotwheels World</h1>
+        <p class="text-xl md:text-2xl">Discover the coolest Hotwheels for all ages and ignite your passion!</p>
+    </section>
+
+    <section id="products-section" class="py-8">
+        <h2 class="section-title text-center text-4xl text-[#6f1d1b] my-12 relative">Our Hotwheels Collection</h2>
+        <div class="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 p-8 max-w-7xl mx-auto">
+            </div>
+    </section>
+
+    <section id="cart-section" class="hidden-section py-12 px-8 bg-[#bb9457] text-[#432818] max-w-4xl mx-auto rounded-lg shadow-xl my-12">
+        <h2 class="section-title text-center text-4xl text-[#6f1d1b] mb-8 relative">Your Shopping Cart</h2>
+        <ul id="cart-items" class="list-none p-0 mt-6 pt-4 border-t border-[#432818]">
+            </ul>
+        <div id="cart-summary" class="text-right mt-6 text-xl font-bold text-[#6f1d1b] pt-4 border-t-2 border-[#432818]">
+            Total: ₹<span id="cart-total">0</span>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between mt-8 gap-4">
+            <button class="px-8 py-3 bg-[#99582a] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#7b451d]" onclick="showSection('products-section')">Continue Shopping</button>
+            <button class="px-8 py-3 bg-[#6f1d1b] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#551513]" onclick="startCheckout()">Proceed to Checkout</button>
+        </div>
+    </section>
+
+    <section id="checkout-customer-info" class="hidden-section py-12 px-8 bg-white max-w-4xl mx-auto rounded-lg shadow-xl my-12">
+        <h2 class="section-title text-center text-4xl text-[#6f1d1b] mb-8 relative">Checkout: Customer Information</h2>
+        <div class="mb-8">
+            <p class="text-lg text-center mb-4">Already have an account? <a href="#" class="text-[#6f1d1b] font-bold hover:underline">Login</a> or continue as a guest.</p>
+            <div class="mb-6">
+                <label for="customer-email" class="block mb-2 font-bold text-[#432818]">Email Address:</label>
+                <input type="email" id="customer-email" placeholder="you@example.com" required class="w-full p-3 mb-4 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+            </div>
+            <div class="flex justify-end">
+                <button class="px-8 py-3 bg-[#6f1d1b] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#551513]" onclick="nextCheckoutStep('customer-info', 'shipping-info')">Continue to Shipping</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="checkout-shipping-info" class="hidden-section py-12 px-8 bg-white max-w-4xl mx-auto rounded-lg shadow-xl my-12">
+        <h2 class="section-title text-center text-4xl text-[#6f1d1b] mb-8 relative">Checkout: Shipping Information</h2>
+        <div class="mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                <div class="mb-4">
+                    <label for="full-name" class="block mb-2 font-bold text-[#432818]">Full Name:</label>
+                    <input type="text" id="full-name" placeholder="John Doe" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="address-line1" class="block mb-2 font-bold text-[#432818]">Address Line 1:</label>
+                    <input type="text" id="address-line1" placeholder="123 Main Street" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="address-line2" class="block mb-2 font-bold text-[#432818]">Address Line 2 (Optional):</label>
+                    <input type="text" id="address-line2" placeholder="Apt, Suite, Bldg" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="city" class="block mb-2 font-bold text-[#432818]">City:</label>
+                    <input type="text" id="city" placeholder="Mumbai" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="state" class="block mb-2 font-bold text-[#432818]">State/Province:</label>
+                    <input type="text" id="state" placeholder="Maharashtra" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="pincode" class="block mb-2 font-bold text-[#432818]">Pincode/Zip Code:</label>
+                    <input type="text" id="pincode" placeholder="401404" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4 md:col-span-2">
+                    <label for="phone" class="block mb-2 font-bold text-[#432818]">Phone Number:</label>
+                    <input type="tel" id="phone" placeholder="9876543210" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-[#6f1d1b] mt-8 mb-4">Shipping Method</h3>
+            <div class="space-y-3">
+                <div>
+                    <input type="radio" id="standard-shipping" name="shipping-method" value="standard" checked class="mr-2 transform scale-125">
+                    <label for="standard-shipping" class="text-lg text-[#432818] cursor-pointer">Standard Delivery (5-7 business days) - ₹50</label>
+                </div>
+                <div>
+                    <input type="radio" id="express-shipping" name="shipping-method" value="express" class="mr-2 transform scale-125">
+                    <label for="express-shipping" class="text-lg text-[#432818] cursor-pointer">Express Delivery (2-3 business days) - ₹150</label>
+                </div>
+                <div>
+                    <input type="radio" id="nextday-shipping" name="shipping-method" value="nextday" class="mr-2 transform scale-125">
+                    <label for="nextday-shipping" class="text-lg text-[#432818] cursor-pointer">Next-Day Delivery (within 24 hours) - ₹250</label>
+                </div>
+            </div>
+
+            <div class="mt-6 mb-4">
+                <input type="checkbox" id="billing-same-as-shipping" checked class="mr-2 transform scale-125">
+                <label for="billing-same-as-shipping" class="font-bold text-[#432818] cursor-pointer">Billing address same as shipping address</label>
+            </div>
+            <div id="billing-address-fields" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4" style="display: none;">
+                <h3 class="text-xl font-bold text-[#6f1d1b] col-span-full mb-4">Billing Information</h3>
+                <div class="mb-4">
+                    <label for="billing-full-name" class="block mb-2 font-bold text-[#432818]">Full Name (Billing):</label>
+                    <input type="text" id="billing-full-name" placeholder="John Doe" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="billing-address-line1" class="block mb-2 font-bold text-[#432818]">Address Line 1 (Billing):</label>
+                    <input type="text" id="billing-address-line1" placeholder="123 Main Street" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="billing-city" class="block mb-2 font-bold text-[#432818]">City (Billing):</label>
+                    <input type="text" id="billing-city" placeholder="Mumbai" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4">
+                    <label for="billing-state" class="block mb-2 font-bold text-[#432818]">State/Province (Billing):</label>
+                    <input type="text" id="billing-state" placeholder="Maharashtra" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+                <div class="mb-4 md:col-span-2">
+                    <label for="billing-pincode" class="block mb-2 font-bold text-[#432818]">Pincode/Zip Code (Billing):</label>
+                    <input type="text" id="billing-pincode" placeholder="401404" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between mt-8 gap-4">
+                <button class="px-8 py-3 bg-[#99582a] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#7b451d]" onclick="prevCheckoutStep('shipping-info', 'customer-info')">Back to Customer Info</button>
+                <button class="px-8 py-3 bg-[#6f1d1b] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#551513]" onclick="nextCheckoutStep('shipping-info', 'payment-info')">Continue to Payment</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="checkout-payment-info" class="hidden-section py-12 px-8 bg-white max-w-4xl mx-auto rounded-lg shadow-xl my-12">
+        <h2 class="section-title text-center text-4xl text-[#6f1d1b] mb-8 relative">Checkout: Payment Information</h2>
+        <div class="mb-8">
+            <h3 class="text-xl font-bold text-[#6f1d1b] mb-4">Select Payment Method</h3>
+            <div class="space-y-4">
+                <div>
+                    <input type="radio" id="pay-card" name="payment-method" value="card" checked onchange="showPaymentDetails('card')" class="mr-2 transform scale-125">
+                    <label for="pay-card" class="text-lg text-[#432818] cursor-pointer">Credit/Debit Card</label>
+                </div>
+                <div id="payment-details-card" class="mt-4 p-4 border border-dashed border-[#bb9457] rounded-md bg-[#ffe6a7]">
+                    <div class="mb-4">
+                        <label for="card-number" class="block mb-2 font-bold text-[#432818]">Card Number:</label>
+                        <input type="text" id="card-number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                    </div>
+                    <div class="mb-4">
+                        <label for="card-name" class="block mb-2 font-bold text-[#432818]">Cardholder Name:</label>
+                        <input type="text" id="card-name" placeholder="John Doe" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                    </div>
+                    <div class="flex gap-4 mb-4">
+                        <div class="flex-1">
+                            <label for="expiry-month" class="block mb-2 font-bold text-[#432818]">Expiry Month:</label>
+                            <input type="text" id="expiry-month" placeholder="MM" maxlength="2" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                        </div>
+                        <div class="flex-1">
+                            <label for="expiry-year" class="block mb-2 font-bold text-[#432818]">Expiry Year:</label>
+                            <input type="text" id="expiry-year" placeholder="YY" maxlength="2" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="cvv" class="block mb-2 font-bold text-[#432818]">CVV:</label>
+                        <input type="text" id="cvv" placeholder="XXX" maxlength="4" required class="w-24 p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                    </div>
+                </div>
+
+                <div>
+                    <input type="radio" id="pay-upi" name="payment-method" value="upi" onchange="showPaymentDetails('upi')" class="mr-2 transform scale-125">
+                    <label for="pay-upi" class="text-lg text-[#432818] cursor-pointer">UPI (Unified Payments Interface)</label>
+                </div>
+                <div id="payment-details-upi" class="mt-4 p-4 border border-dashed border-[#bb9457] rounded-md bg-[#ffe6a7] hidden">
+                    <div class="mb-4">
+                        <label for="upi-id" class="block mb-2 font-bold text-[#432818]">Enter UPI ID:</label>
+                        <input type="text" id="upi-id" placeholder="yourname@bank" required class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                    </div>
+                    <p class="text-center mt-4 mb-4">Or scan this QR code:</p>
+                    <img src="https://via.placeholder.com/150?text=UPI+QR+Code" alt="UPI QR Code" class="block mx-auto border border-[#bb9457] rounded-md">
+                </div>
+
+                <div>
+                    <input type="radio" id="pay-wallet" name="payment-method" value="wallet" onchange="showPaymentDetails('wallets')" class="mr-2 transform scale-125">
+                    <label for="pay-wallet" class="text-lg text-[#432818] cursor-pointer">Digital Wallet</label>
+                </div>
+                <div id="payment-details-wallets" class="mt-4 p-4 border border-dashed border-[#bb9457] rounded-md bg-[#ffe6a7] hidden">
+                    <div class="mb-4">
+                        <label for="wallet-select" class="block mb-2 font-bold text-[#432818]">Select Wallet:</label>
+                        <select id="wallet-select" class="w-full p-3 border border-[#bb9457] rounded-md text-lg text-[#432818] bg-white focus:outline-none focus:ring-2 focus:ring-[#bb9457]">
+                            <option value="">-- Select --</option>
+                            <option value="paytm">Paytm</option>
+                            <option value="phonepe">PhonePe</option>
+                            <option value="gpay">Google Pay</option>
+                            <option value="amazonpay">Amazon Pay</option>
+                        </select>
+                    </div>
+                    <p class="text-base text-center">You will be redirected to the wallet app/page to complete your payment.</p>
+                </div>
+
+                <div>
+                    <input type="radio" id="pay-cod" name="payment-method" value="cod" onchange="showPaymentDetails('cod')" class="mr-2 transform scale-125">
+                    <label for="pay-cod" class="text-lg text-[#432818] cursor-pointer">Cash on Delivery (COD) <small class="text-sm">(Surcharge: ₹20)</small></label>
+                </div>
+                <div id="payment-details-cod" class="mt-4 p-4 border border-dashed border-[#bb9457] rounded-md bg-[#ffe6a7] hidden">
+                    <p class="text-base">Pay with cash when your order is delivered to your doorstep.</p>
+                    <p class="text-base font-bold mt-2">A small surcharge of ₹20 applies for COD orders.</p>
+                </div>
+            </div>
+
+            <div class="order-summary-small bg-[#ffe6a7] border border-[#bb9457] p-6 rounded-lg mt-8">
+                <h3 class="text-xl text-[#6f1d1b] mt-0 mb-4 pb-2 border-b border-[#bb9457]">Order Summary</h3>
+                <div id="payment-order-items">
+                    </div>
+                <p class="flex justify-between mb-2">Subtotal: <span class="font-bold">₹<span id="payment-subtotal">0</span></span></p>
+                <p class="flex justify-between mb-2">Shipping: <span class="font-bold">₹<span id="payment-shipping-cost">0</span></span></p>
+                <p id="payment-cod-surcharge" class="flex justify-between mb-2" style="display:none;">COD Surcharge: <span class="font-bold">₹20</span></p>
+                <p class="flex justify-between text-lg font-bold text-[#6f1d1b] pt-2 mt-4 border-t border-dashed border-[#432818] total-line">Grand Total: <span>₹<span id="payment-grand-total">0</span></span></p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between mt-8 gap-4">
+                <button class="px-8 py-3 bg-[#99582a] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#7b451d]" onclick="prevCheckoutStep('payment-info', 'shipping-info')">Back to Shipping</button>
+                <button class="px-8 py-3 bg-[#6f1d1b] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#551513]" onclick="placeOrder()">Place Order</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="order-confirmation" class="hidden-section py-12 px-8 bg-[#ffe6a7] max-w-4xl mx-auto rounded-lg shadow-xl my-12 text-center">
+        <h2 class="section-title text-4xl text-[#6f1d1b] mb-6 relative">Order Confirmed!</h2>
+        <p class="text-lg mb-4 text-[#432818]">Thank you for your purchase from Hotwheels | BikeBazaar!</p>
+        <p class="text-lg mb-8 text-[#432818]">Your order has been successfully placed and will be processed shortly.</p>
+        <div class="order-details text-left bg-white border border-[#bb9457] p-8 rounded-lg mt-8">
+            <h3 class="text-2xl text-[#432818] mt-0 mb-6 pb-2 border-b border-[#bb9457]">Order Details</h3>
+            <p class="mb-3 text-base">Order Number: <strong class="text-[#6f1d1b]"><span id="confirmed-order-number"></span></strong></p>
+            <p class="mb-3 text-base">Estimated Delivery: <strong class="text-[#6f1d1b]"><span id="confirmed-delivery-date"></span></strong></p>
+            <p class="mb-3 text-base">Shipping Address: <span id="confirmed-shipping-address"></span></p>
+            <p class="mb-3 text-base">Payment Method: <span id="confirmed-payment-method"></span></p>
+            <hr class="border-t border-[#bb9457] my-6">
+            <h3 class="text-xl text-[#432818] mb-4">Items Purchased:</h3>
+            <ul id="confirmed-order-items" class="list-none p-0 mb-6"></ul>
+            <p class="text-right font-bold text-xl text-[#6f1d1b]">Total Paid: ₹<span id="confirmed-total-paid"></span></p>
+        </div>
+        <div class="flex flex-col md:flex-row justify-center mt-8 gap-4">
+            <button class="px-8 py-3 bg-[#6f1d1b] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#99582a]" onclick="window.location.reload()">Continue Shopping</button>
+            <button class="px-8 py-3 bg-[#6f1d1b] text-[#ffe6a7] border-none rounded-md cursor-pointer text-lg font-bold transition-colors duration-300 hover:bg-[#99582a]" onclick="alert('Order Tracking feature is under development!')">Track Order</button>
+        </div>
+    </section>
+
+    <div id="product-detail-modal" class="modal">
+        <div class="modal-content bg-white p-8 rounded-lg w-11/12 max-w-3xl shadow-xl relative flex flex-col md:flex-row gap-8">
+            <span class="close-button text-[#432818] text-4xl font-bold absolute top-2 right-4 cursor-pointer hover:text-[#6f1d1b] transition-colors duration-300" onclick="closeProductDetailModal()">&times;</span>
+            <div class="modal-product-image flex-1 min-w-xs text-center">
+                <img id="modal-product-img" src="" alt="Product Image" class="max-w-full h-72 object-contain rounded-lg bg-white border border-gray-200">
+            </div>
+            <div class="modal-product-details flex-2 min-w-sm">
+                <h2 id="modal-product-name" class="text-4xl text-[#6f1d1b] mt-0 mb-4"></h2>
+                <p class="text-3xl font-bold text-[#99582a] mb-6">₹<span id="modal-product-price"></span></p>
+                <p id="modal-product-description" class="mb-6 text-[#432818] text-lg"></p>
+                <div class="flex items-center mb-6">
+                    <button class="bg-[#6f1d1b] text-[#ffe6a7] border-none px-4 py-2 rounded-md cursor-pointer text-lg transition-colors duration-300 hover:bg-[#99582a]" onclick="updateModalQuantity(-1)">-</button>
+                    <span id="modal-product-quantity" class="min-w-8 text-center mx-3 text-xl font-bold text-[#432818]">1</span>
+                    <button class="bg-[#6f1d1b] text-[#ffe6a7] border-none px-4 py-2 rounded-md cursor-pointer text-lg transition-colors duration-300 hover:bg-[#99582a]" onclick="updateModalQuantity(1)">+</button>
+                </div>
+                <button class="bg-[#6f1d1b] text-[#ffe6a7] border-none px-8 py-4 cursor-pointer rounded-md text-xl font-bold transition-colors duration-300 hover:bg-[#99582a] w-full" onclick="addModalItemToCart()">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Sample Product Data (More detailed)
+        const productsData = [
+            { id: 1, name: 'Hotwheels Racer', price: 249, image: 'images.jpeg', description: 'A sleek, aerodynamic racer built for speed. Perfect for the ultimate track experience!' },
+            { id: 2, name: 'Speed Blaster', price: 299, image: 'images (2).jpeg', description: 'Unleash extreme velocity with the Speed Blaster. Its powerful design dominates any race.' },
+            { id: 3, name: 'Track Star', price: 399, image: 'images (3).jpeg', description: 'Master every turn and jump with the Track Star. Engineered for precision and durability.' },
+            { id: 4, name: 'Thunder Strike', price: 349, image: 'images (8).jpeg', description: 'Feel the rumble with Thunder Strike! A robust and aggressive design for thrilling adventures.' },
+            { id: 5, name: 'Turbo Flame', price: 599, image: 'images (7).jpeg', description: 'Ignite the road with Turbo Flame. Featuring a dynamic paint job and unparalleled performance.' },
+            { id: 6, name: 'Shadow Rider', price: 200, image: 'images (6).jpeg', description: 'Mysterious and swift, the Shadow Rider glides through the night. A collector\'s stealth favorite.' },
+            { id: 7, name: 'Blazing Bullet', price: 480, image: 'images (5).jpeg', description: 'Faster than a bullet, the Blazing Bullet leaves competitors in the dust with its fiery spirit.' },
+            { id: 8, name: 'Velocity Viper', price: 449, image: 'images (4).jpeg', description: 'Strike fast and hard with the Velocity Viper. Its agile design makes it a champion on any course.' },
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentModalProduct = null;
+        let modalQuantity = 1;
+
+        const SHIPPING_COSTS = {
+            'standard': 50,
+            'express': 150,
+            'nextday': 250
+        };
+        const COD_SURCHARGE = 20;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderCart();
+            showSection('products-section'); // Start on the products page
+            setupCheckoutListeners();
+        });
+
+        function renderProducts() {
+            const productsContainer = document.querySelector('#products-section .products');
+            productsContainer.innerHTML = '';
+            productsData.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product border-2 border-[#bb9457] rounded-lg bg-white p-6 text-center shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1 flex flex-col justify-between';
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="max-w-full h-48 object-contain rounded-md mb-4 cursor-pointer bg-gray-100" onclick="openProductDetailModal(${product.id})">
+                    <h3 class="text-[#432818] mt-2 text-xl font-semibold">${product.name}</h3>
+                    <p class="text-[#99582a] font-bold text-lg mb-4">₹${product.price}</p>
+                    <button class="bg-[#6f1d1b] text-[#ffe6a7] border-none px-6 py-2 rounded-md cursor-pointer text-base transition-colors duration-300 hover:bg-[#99582a] mt-auto" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productsContainer.appendChild(productDiv);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            alert(`${product.name} added to cart!`);
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function updateCartQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                }
+            }
+        }
+
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalElement = document.getElementById('cart-total');
+            const cartCountElement = document.getElementById('cart-count');
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            let itemCount = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<li class="text-center py-5 italic text-lg">Your cart is empty!</li>';
+            } else {
+                cart.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'flex flex-col sm:flex-row justify-between items-center mb-4 pb-4 border-b border-dashed border-gray-400 last:border-b-0 last:mb-0 last:pb-0';
+                    li.innerHTML = `
+                        <div class="flex items-center flex-grow mb-2 sm:mb-0 w-full sm:w-auto">
+                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-md mr-4 border border-gray-300">
+                            <span class="text-lg font-medium text-[#432818]">${item.name}</span>
+                        </div>
+                        <div class="flex items-center mb-2 sm:mb-0">
+                            <button class="bg-[#6f1d1b] text-[#ffe6a7] border-none px-3 py-1 rounded-md cursor-pointer text-base" onclick="updateCartQuantity(${item.id}, -1)">-</button>
+                            <span class="min-w-6 text-center mx-2 font-bold text-lg">${item.quantity}</span>
+                            <button class="bg-[#6f1d1b] text-[#ffe6a7] border-none px-3 py-1 rounded-md cursor-pointer text-base" onclick="updateCartQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <span class="text-lg font-bold text-[#99582a] mr-4">₹${item.price * item.quantity}</span>
+                        <button class="bg-red-600 text-white border-none px-3 py-1 rounded-md cursor-pointer transition-colors duration-300 hover:bg-red-800" onclick="removeFromCart(${item.id})">Remove</button>
+                    `;
+                    cartItemsContainer.appendChild(li);
+                    total += item.price * item.quantity;
+                    itemCount += item.quantity;
+                });
+            }
+
+            cartTotalElement.textContent = total;
+            cartCountElement.textContent = itemCount;
+        }
+
+        // --- Section Visibility Management ---
+        function showSection(sectionId) {
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.add('hidden-section');
+            });
+            document.getElementById(sectionId).classList.remove('hidden-section');
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top of section
+        }
+
+        // --- Product Detail Modal Functions ---
+        function openProductDetailModal(productId) {
+            currentModalProduct = productsData.find(p => p.id === productId);
+            if (!currentModalProduct) return;
+
+            document.getElementById('modal-product-img').src = currentModalProduct.image;
+            document.getElementById('modal-product-name').textContent = currentModalProduct.name;
+            document.getElementById('modal-product-price').textContent = currentModalProduct.price;
+            document.getElementById('modal-product-description').textContent = currentModalProduct.description;
+            modalQuantity = 1; // Reset quantity
+            document.getElementById('modal-product-quantity').textContent = modalQuantity;
+
+            document.getElementById('product-detail-modal').style.display = 'flex'; // Use flex to center
+        }
+
+        function closeProductDetailModal() {
+            document.getElementById('product-detail-modal').style.display = 'none';
+            currentModalProduct = null;
+            modalQuantity = 1;
+        }
+
+        function updateModalQuantity(change) {
+            modalQuantity += change;
+            if (modalQuantity < 1) modalQuantity = 1; // Minimum 1
+            document.getElementById('modal-product-quantity').textContent = modalQuantity;
+        }
+
+        function addModalItemToCart() {
+            if (!currentModalProduct) return;
+
+            const existing = cart.find(item => item.id === currentModalProduct.id);
+            if (existing) {
+                existing.quantity += modalQuantity;
+            } else {
+                cart.push({
+                    id: currentModalProduct.id,
+                    name: currentModalProduct.name,
+                    price: currentModalProduct.price,
+                    image: currentModalProduct.image,
+                    quantity: modalQuantity
+                });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            closeProductDetailModal();
+            alert(`${modalQuantity} x ${currentModalProduct.name} added to cart!`);
+        }
+
+        // --- Checkout Flow Functions ---
+        function startCheckout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty! Please add items before checking out.');
+                return;
+            }
+            showSection('checkout-customer-info');
+        }
+
+        function nextCheckoutStep(currentStepId, nextStepId) {
+            // Basic validation for demonstration purposes
+            if (currentStepId === 'customer-info') {
+                const email = document.getElementById('customer-email').value;
+                if (!email || !email.includes('@') || !email.includes('.')) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+            } else if (currentStepId === 'shipping-info') {
+                const requiredFields = ['full-name', 'address-line1', 'city', 'state', 'pincode', 'phone'];
+                for (const fieldId of requiredFields) {
+                    if (!document.getElementById(fieldId).value) {
+                        alert(`Please fill in your ${document.querySelector(`label[for="${fieldId}"]`).textContent.replace(':', '')}`);
+                        return;
+                    }
+                }
+                if (!document.getElementById('billing-same-as-shipping').checked) {
+                    const billingRequiredFields = ['billing-full-name', 'billing-address-line1', 'billing-city', 'billing-state', 'billing-pincode'];
+                    for (const fieldId of billingRequiredFields) {
+                        if (!document.getElementById(fieldId).value) {
+                            alert(`Please fill in your billing ${document.querySelector(`label[for="${fieldId}"]`).textContent.replace('(Billing):', '')}`);
+                            return;
+                        }
+                    }
+                }
+                updateOrderSummary(); // Update summary before going to payment
+            } else if (currentStepId === 'payment-info') {
+                const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
+                if (selectedPaymentMethod === 'card') {
+                    const cardNumber = document.getElementById('card-number').value;
+                    const cardName = document.getElementById('card-name').value;
+                    const expiryMonth = document.getElementById('expiry-month').value;
+                    const expiryYear = document.getElementById('expiry-year').value;
+                    const cvv = document.getElementById('cvv').value;
+
+                    if (!cardNumber || !cardName || !expiryMonth || !expiryYear || !cvv) {
+                        alert('Please fill in all credit/debit card details.');
+                        return;
+                    }
+                    if (cardNumber.length < 16 || isNaN(cardNumber.replace(/\s/g, ''))) {
+                         alert('Please enter a valid 16-digit card number.');
+                         return;
+                    }
+                    if (expiryMonth.length !== 2 || isNaN(expiryMonth) || parseInt(expiryMonth) < 1 || parseInt(expiryMonth) > 12) {
+                        alert('Please enter a valid 2-digit expiry month (MM).');
+                        return;
+                    }
+                    const currentYear = new Date().getFullYear() % 100; // Get last two digits of current year
+                    if (expiryYear.length !== 2 || isNaN(expiryYear) || parseInt(expiryYear) < currentYear) {
+                        alert('Please enter a valid 2-digit expiry year (YY).');
+                        return;
+                    }
+                    if (cvv.length < 3 || isNaN(cvv)) {
+                        alert('Please enter a valid 3 or 4 digit CVV.');
+                        return;
+                    }
+
+                } else if (selectedPaymentMethod === 'upi') {
+                    const upiId = document.getElementById('upi-id').value;
+                    if (!upiId || !upiId.includes('@')) {
+                        alert('Please enter a valid UPI ID.');
+                        return;
+                    }
+                } else if (selectedPaymentMethod === 'wallet') {
+                    const wallet = document.getElementById('wallet-select').value;
+                    if (!wallet) {
+                        alert('Please select a digital wallet.');
+                        return;
+                    }
+                }
+            }
+
+            showSection(`checkout-${nextStepId}`);
+        }
+
+        function prevCheckoutStep(currentStepId, prevStepId) {
+            showSection(`checkout-${prevStepId}`);
+        }
+
+        function setupCheckoutListeners() {
+            document.getElementById('billing-same-as-shipping').addEventListener('change', function() {
+                const billingFields = document.getElementById('billing-address-fields');
+                billingFields.style.display = this.checked ? 'none' : 'grid'; // Changed to 'grid' for Tailwind's grid layout
+                // Clear billing fields if 'same as shipping' is checked
+                if (this.checked) {
+                    document.getElementById('billing-full-name').value = '';
+                    document.getElementById('billing-address-line1').value = '';
+                    document.getElementById('billing-city').value = '';
+                    document.getElementById('billing-state').value = '';
+                    document.getElementById('billing-pincode').value = '';
+                }
+            });
+
+            // Add event listeners for shipping method change to update summary
+            document.querySelectorAll('input[name="shipping-method"]').forEach(radio => {
+                radio.addEventListener('change', updateOrderSummary);
+            });
+            document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+                radio.addEventListener('change', updateOrderSummary);
+            });
+
+            // Initial call to show correct payment details
+            showPaymentDetails(document.querySelector('input[name="payment-method"]:checked').value);
+        }
+
+        function showPaymentDetails(method) {
+            document.getElementById('payment-details-card').classList.add('hidden');
+            document.getElementById('payment-details-upi').classList.add('hidden');
+            document.getElementById('payment-details-wallets').classList.add('hidden');
+            document.getElementById('payment-details-cod').classList.add('hidden');
+
+            if (method === 'card') {
+                document.getElementById('payment-details-card').classList.remove('hidden');
+            } else if (method === 'upi') {
+                document.getElementById('payment-details-upi').classList.remove('hidden');
+            } else if (method === 'wallet') {
+                document.getElementById('payment-details-wallets').classList.remove('hidden');
+            } else if (method === 'cod') {
+                document.getElementById('payment-details-cod').classList.remove('hidden');
+            }
+            updateOrderSummary(); // Update summary when payment method changes
+        }
+
+        function calculateCartSubtotal() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+
+        function getShippingCost() {
+            const selectedShippingMethod = document.querySelector('input[name="shipping-method"]:checked');
+            return selectedShippingMethod ? SHIPPING_COSTS[selectedShippingMethod.value] : 0;
+        }
+
+        function getCodSurcharge() {
+            const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked');
+            return (selectedPaymentMethod && selectedPaymentMethod.value === 'cod') ? COD_SURCHARGE : 0;
+        }
+
+        function updateOrderSummary() {
+            const subtotal = calculateCartSubtotal();
+            const shippingCost = getShippingCost();
+            const codSurcharge = getCodSurcharge();
+            const grandTotal = subtotal + shippingCost + codSurcharge;
+
+            document.getElementById('payment-subtotal').textContent = subtotal;
+            document.getElementById('payment-shipping-cost').textContent = shippingCost;
+            document.getElementById('payment-grand-total').textContent = grandTotal;
+
+            const codSurchargeLine = document.getElementById('payment-cod-surcharge');
+            if (codSurcharge > 0) {
+                codSurchargeLine.style.display = 'flex'; // Changed to flex for Tailwind layout
+            } else {
+                codSurchargeLine.style.display = 'none';
+            }
+
+            // Populate items in small order summary
+            const paymentOrderItems = document.getElementById('payment-order-items');
+            paymentOrderItems.innerHTML = '';
+            cart.forEach(item => {
+                const p = document.createElement('p');
+                p.className = 'flex justify-between mb-1 text-base';
+                p.innerHTML = `${item.name} (x${item.quantity}): <span class="font-bold">₹${item.price * item.quantity}</span>`;
+                paymentOrderItems.appendChild(p);
+            });
+        }
+
+
+        function placeOrder() {
+            // Simulate API call delay
+            alert('Processing your order...');
+
+            const orderNumber = 'HWBB-' + Math.floor(Math.random() * 1000000);
+            const deliveryDate = new Date();
+            deliveryDate.setDate(deliveryDate.getDate() + 5); // Example: 5 days from now
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const estimatedDelivery = deliveryDate.toLocaleDateString('en-US', options);
+
+            const customerEmail = document.getElementById('customer-email').value;
+            const fullName = document.getElementById('full-name').value;
+            const address1 = document.getElementById('address-line1').value;
+            const address2 = document.getElementById('address-line2').value;
+            const city = document.getElementById('city').value;
+            const state = document.getElementById('state').value;
+            const pincode = document.getElementById('pincode').value;
+            const phone = document.getElementById('phone').value;
+
+            let shippingAddress = `${fullName}, ${address1}`;
+            if (address2) shippingAddress += `, ${address2}`;
+            shippingAddress += `, ${city}, ${state} - ${pincode}, Phone: ${phone}`;
+
+
+            const selectedPaymentMethodRadio = document.querySelector('input[name="payment-method"]:checked');
+            const selectedPaymentMethod = selectedPaymentMethodRadio ? selectedPaymentMethodRadio.nextElementSibling.textContent.split('<')[0].trim() : 'N/A'; // Get text without small tag
+
+            const subtotal = calculateCartSubtotal();
+            const shippingCost = getShippingCost();
+            const codSurcharge = getCodSurcharge();
+            const grandTotal = subtotal + shippingCost + codSurcharge;
+
+            // Update confirmation page details
+            document.getElementById('confirmed-order-number').textContent = orderNumber;
+            document.getElementById('confirmed-delivery-date').textContent = estimatedDelivery;
+            document.getElementById('confirmed-shipping-address').textContent = shippingAddress;
+            document.getElementById('confirmed-payment-method').textContent = selectedPaymentMethod;
+            document.getElementById('confirmed-total-paid').textContent = grandTotal;
+
+            const confirmedOrderItems = document.getElementById('confirmed-order-items');
+            confirmedOrderItems.innerHTML = '';
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'mb-2';
+                li.textContent = `${item.name} (x${item.quantity}) - ₹${item.price * item.quantity}`;
+                confirmedOrderItems.appendChild(li);
+            });
+
+
+            // Clear cart and show confirmation
+            cart = [];
+            localStorage.removeItem('cart');
+            renderCart(); // Update cart count to 0
+            showSection('order-confirmation');
+
+            // Simulate sending confirmation email (console log for this example)
+            console.log(`
+            Order Confirmation Email:
+            To: ${customerEmail}
+            Subject: Your Hotwheels Order #${orderNumber} is Confirmed!
+
+            Dear ${fullName},
+
+            Thank you for your recent purchase from Hotwheels | BikeBazaar!
+
+            Your order #${orderNumber} has been successfully placed and is being processed.
+
+            Estimated Delivery Date: ${estimatedDelivery}
+
+            Shipping Address:
+            ${fullName}
+            ${address1}
+            ${address2 ? address2 : ''}
+            ${city}, ${state} - ${pincode}
+            Phone: ${phone}
+
+            Payment Method: ${selectedPaymentMethod}
+
+            Order Summary:
+            ${cart.map(item => `- ${item.name} (x${item.quantity})`).join('\n')}
+            Subtotal: ₹${subtotal}
+            Shipping: ₹${shippingCost}
+            ${codSurcharge > 0 ? `COD Surcharge: ₹${codSurcharge}\n` : ''}
+            Grand Total: ₹${grandTotal}
+
+            You will receive another email with tracking details once your order is shipped.
+
+            If you have any questions, please contact us at support@bikebazaar.com.
+
+            Happy riding!
+            The Hotwheels | BikeBazaar Team
+            `);
+        }
+    </script>
 </body>
-
 </html>
