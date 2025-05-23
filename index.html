@@ -102,11 +102,26 @@
       color: var(--dark-brown);
       text-align: center;
     }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.5rem 0;
+    }
+
+    .cart-item button {
+      background-color: var(--dark-red);
+      color: var(--light-cream);
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="logo.jpg" alt="Hotwheels Logo">
     <nav>
       <a href="#">Home</a>
       <a href="#">Products</a>
@@ -119,62 +134,116 @@
     <p>Discover the coolest Hotwheels for all ages!</p>
   </section>
 
-  <section class="products">
+  <section class="products" id="products">
     <div class="product">
       <img src="images.jpeg" alt="Hotwheels Racer">
       <h3>Hotwheels Racer</h3>
       <p>₹249</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Hotwheels Racer', 249)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="images (2).jpeg" alt="Speed Blaster">
       <h3>Speed Blaster</h3>
       <p>₹299</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Speed Blaster', 299)">Add to Cart</button>
     </div>
     <div class="product">
-      <img src="
-images (3).jpeg" alt="Track Star">
+      <img src="images (3).jpeg" alt="Track Star">
       <h3>Track Star</h3>
       <p>₹399</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Track Star', 399)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="images (8).jpeg" alt="Thunder Strike">
       <h3>Thunder Strike</h3>
       <p>₹349</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Thunder Strike', 349)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="images (7).jpeg" alt="Turbo Flame">
       <h3>Turbo Flame</h3>
       <p>₹599</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Turbo Flame', 599)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="images (6).jpeg" alt="Shadow Rider">
       <h3>Shadow Rider</h3>
       <p>₹200</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Shadow Rider', 200)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="images (5).jpeg" alt="Blazing Bullet">
       <h3>Blazing Bullet</h3>
       <p>₹480</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Blazing Bullet', 480)">Add to Cart</button>
     </div>
     <div class="product">
       <img src="images (4).jpeg" alt="Velocity Viper">
       <h3>Velocity Viper</h3>
       <p>₹449</p>
-      <button>Add to Cart</button>
+      <button onclick="addToCart('Velocity Viper', 449)">Add to Cart</button>
     </div>
   </section>
 
   <section class="cart-section">
     <h2>Your Cart</h2>
-    <p>No items in cart</p>
-    <button>Checkout</button>
+    <ul id="cart-items"></ul>
+    <p id="cart-total">Total: ₹0</p>
+    <button onclick="checkout()">Checkout</button>
   </section>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function addToCart(product, price) {
+      const existing = cart.find(item => item.product === product);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ product, price, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function removeFromCart(product) {
+      cart = cart.filter(item => item.product !== product);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function renderCart() {
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      cartItems.innerHTML = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <span>${item.product} (x${item.quantity}) - ₹${item.price * item.quantity}</span>
+          <button onclick="removeFromCart('${item.product}')">Remove</button>
+        `;
+        cartItems.appendChild(li);
+        total += item.price * item.quantity;
+      });
+
+      cartTotal.textContent = `Total: ₹${total}`;
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+      } else {
+        alert('Thank you for your purchase!');
+        cart = [];
+        localStorage.removeItem('cart');
+        renderCart();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCart);
+  </script>
 </body>
 </html>
